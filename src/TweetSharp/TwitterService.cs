@@ -68,6 +68,9 @@ namespace TweetSharp
 #if !WINDOWS_PHONE
         private void SetResponse(RestResponseBase response)
         {
+            if (response.ErrorContentEntity != null)
+                throw new TwitterException("Twitter call failed.", response.ErrorContentEntity as TwitterError, response.InnerException);
+
             Response = new TwitterResponse(response);
         }
 #endif
